@@ -2,7 +2,7 @@ import React from 'react';
 
 // Import the library components
 import { Heading, Text } from './Tpography';
-import { Button } from './Button';
+import { Button } from './Button1';
 import { Card } from './Card';
 import { Container, Section } from './Layout';
 import { Navbar } from './Navbar';

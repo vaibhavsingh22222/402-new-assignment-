@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from './Layout';
-import { Button } from './Button';
+import { Button } from './Button1';
 
 export const Navbar: React.FC = () => {
   return (
