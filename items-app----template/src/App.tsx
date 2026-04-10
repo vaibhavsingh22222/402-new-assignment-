@@ -1,43 +1,45 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
-import { AsymmetricHero } from "./components/AsymetricHero";
-import { Button } from "./components/Button1";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Navbar } from"./components/Navbar";  
+import Footer from "./components/Footer"
 import Home from "./pages/ Home"
-import Items from "./pages/ Items";
-import Item from "./pages/Item";
-import { Card } from "./components/Card";
-import { CenteredHero } from "./components/CenteredHero";
-import ItemsAdmin from "./pages/
+import Items from "./pages/ Items"
+import Item from "./pages/Item"
+import ItemAdmin from "./pages/ItemAdmin";
+//import Review from "./pages/Review";
+// import '@aws-amplify/ui-react/styles.css';
+import { Amplify } from "aws-amplify"
+import { Authenticator } from "@aws-amplify/ui-react"
+
+Amplify.configure({
+  Auth: {
+    Cognito:{
+      userPoolId:"us-east-1_SVLxqjGTe",
+      userPoolClientId: "2pb3djs0j4cu08p6tiddvllavj",
+    }
+  }
+})
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Navbar />
-
-      <main className="p-6 space-y-6">
-        <AsymmetricHero />
-        <Button children={undefined}/>
-        <div className="flex gap-4 flex-wrap">
-          
+    <Authenticator.Provider>    
+      <BrowserRouter>
+        <div className="bg-[#EAE4D6] min-h-screen">
+          <Navbar/>
+          <main className="p-6">
+            <Authenticator loginMechanisms={['email']} signUpAttributes={['name']}>
+              <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/items" element={<Items/>}/>
+                <Route path="/items/id" element={<Item/>}/>
+                <Route path="/admin" element={<ItemAdmin/>} />
+              </Routes>
+            </Authenticator>
+          </main>
+          <Footer />
         </div>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/items" element={<Items />} />
-          <Route path="/items/:id" element={<Item />} />
-          <Route path="/itemsAdmin" element={<ItemsAdmin />} />
-        </Routes>
-      </main>
-      <AsymmetricHero/>
-      <Card/> 
-      <CenteredHero/>
-
-      <Footer />
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    </Authenticator.Provider>
+  )
 }
 
-export default App;
+export default App

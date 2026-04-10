@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import type { Item } from "../Types/Item";
-import itemService from "../services/itemService";
+import type { Item } from "../types/item"
+import itemService from "../Services/itemService";
 import { Container, Section } from "../components/Layout";
-import { Heading, Text } from "../components/Typography";
+import { Heading, Text } from "../components/Tpography"
 import { Input } from "../components/input"
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";

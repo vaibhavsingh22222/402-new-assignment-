@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from './Layout';
-import { Button } from './Button1';
+import { Button } from './Button';
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
 export const Navbar: React.FC = () => {
+  const { user, signOut } = useAuthenticator();
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    const loadAttributes = async () => {
+      if (user) {
+        const attrs = await fetchUserAttributes();
+        setName(
+          attrs.name ||
+          attrs.given_name ||
+          attrs.email ||
+          user.username
+        );
+      }
+    };
+    loadAttributes();
+  }, [user]);
+
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-100">
+      <nav  className="sticky top-0 z-50 bg-[#EAE4D6] backdrop-blur-xl border-b border-[#D3CAB8]">
         <Container>
           <div className="flex justify-between items-center h-24">
             {/* Logo */}
-            <div className="text-2xl font-black italic text-indigo-600 tracking-tighter">
-              coventry <span className="text-slate-900">eco connect</span>
+            <div className="text-2xl font-black italic text-[#5A8A1F] tracking-tighter">
+              COVENTRY <span className="text-[#3A3A2A]">ECO-CONNECT</span>
             </div>
 
             {/* Nav Links */}
@@ -19,12 +39,14 @@ export const Navbar: React.FC = () => {
               {[
                 { label: 'Home', to: '/' },
                 { label: 'Items', to: '/items' },
+                 { label: 'Admin', to: '/Admin' },
+                 { label: 'Reviews', to: '/review' },
               ].map((link) => (
                 <Link
                   key={link.label}
                   to={link.to}
-                  className="text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors uppercase tracking-widest"
-                >
+                  className="text-sm font-bold text-[#6A6A5A] hover:text-[#5A8A1F] transition-colors uppercase tracking-widest"
+                  >
                   {link.label}
                 </Link>
               ))}
@@ -32,12 +54,14 @@ export const Navbar: React.FC = () => {
 
             {/* CTA Group */}
             <div className="flex items-center gap-6">
-              <button className="hidden sm:block text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors">
-                Sign In
-              </button>
-              <Button variant="info" className="!rounded-full !py-2 !px-6 text-sm">
-                Enroll Now
-              </Button>
+              {user ? (
+                <>
+                  <span>Hi {name}</span>
+                  <Button variant='info' onClick={signOut}> Sign out </Button>
+                </>
+              ) : (
+                <span> Sign In or Register to see more</span>
+              )}
             </div>
           </div>
         </Container>

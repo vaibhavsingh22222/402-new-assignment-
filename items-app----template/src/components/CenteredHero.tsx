@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from './Layout';
 import { Heading, Text } from './Tpography';
-import { Button } from './Button1';
+import { Button } from './Button';
 
 export const CenteredHero: React.FC = () => {
   return (
