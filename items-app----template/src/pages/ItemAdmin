@@ -1,0 +1,182 @@
+import { useState, useEffect } from "react";
+import type { Item } from "../Types/Item";
+import itemService from "../services/itemService";
+import { Container, Section } from "../components/Layout";
+import { Heading, Text } from "../components/Typography";
+import { Input } from "../components/input"
+import { Button } from "../components/Button";
+import { Card } from "../components/Card";
+
+export default function ItemAdmin(){
+
+    const [items, setItems] = useState<Item[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string>("");
+    const [formError, setFormError] = useState<string>("");
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [formData, setFormData] = useState({
+        id: "",
+        name: "",
+        description: "",
+        price: ""
+    });
+
+    const loadItems = async () => {
+        try {
+            const data = await itemService.getAll();
+            setItems(data);
+        } catch (err: any) {
+            setError("Failed to load businesses");
+        } finally {
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        loadItems();
+    }, []);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        setFormError("");
+    };
+
+    const handleSave = async () => {
+        if (!formData.id || !formData.name || !formData.description || !formData.price){
+            setFormError("All fields are required")
+            return;
+        }
+
+        try{
+            const updatedItem: Item = {
+                id: formData.id as any,
+                name: formData.name,
+                description: formData.description,
+                price: parseFloat(formData.price)
+            }
+
+            await itemService.put(updatedItem);
+
+            setFormData({id: "",name:"",price:"",description:""})
+            setFormError("");
+            setIsEditing(false);
+            window.alert("Business Updated Successfully!");
+            await loadItems();
+        }catch (err: unknown){
+            setFormError("Failed to save business");
+        }
+    };
+
+    const handleUpdate = (item: Item) => {
+        setFormData({
+            id: item.id.toString(),
+            name: item.name,
+            description: item.description,
+            price: item.price.toString()
+        });
+        setIsEditing(true);
+    }
+
+    const handleDelete = async (ItemId: string) => {
+        if (window.confirm("Are you sure you want to delete this business?")){
+            try{
+                await itemService.delete(ItemId);
+                setItems(prev => prev.filter(item => item.id.toString() !== ItemId));
+                window.alert("Business Deleted Successfully!")
+                await loadItems()
+            }catch (err: unknown){
+                setError("Failed to delete business");
+            }
+        }
+    };  
+
+    if (loading) return (
+        <Container>
+            <Section>
+                <Text>Businesses are loading.....</Text>
+            </Section>
+        </Container>
+    );
+
+    return(
+        <Container>
+            <Section>
+                <Heading level={1}>Business Admin</Heading>
+            </Section>
+            <Section>
+                <Heading level={2}>Manage Businesses</Heading>
+                <div className="mt-8 max-w-2xl">
+                    <div className="space-y-4">
+                        <Input
+                            label="Business ID"
+                            name="id"
+                            type="text"
+                            placeholder="Enter Business ID"
+                            value={formData.id}
+                            onChange={handleInputChange}
+                            disabled={isEditing}
+                        />
+                        <Input
+                            label="Business Name"
+                            name="name"
+                            type="text"
+                            placeholder="Enter Business Name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            label="Business Description"
+                            name="description"
+                            type="text"
+                            placeholder="Enter Business Description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            label="Business Price"
+                            name="price"
+                            type="number"
+                            step="0.01"
+                            placeholder="Enter Business Price"
+                            value={formData.price}
+                            onChange={handleInputChange}
+                        />
+
+                        {formError && <Text className="text text-rose-600">{formError}</Text>}
+
+                        <div className="flex gap-4 pt-4">
+                            <Button variant="success" onClick={handleSave}>
+                                Save Business
+                            </Button>
+                            <Button variant="alert" onClick={() => {
+                                setFormData({ id: "", name: "", price: "", description: "" });
+                                setIsEditing(false);
+                            }}>
+                                Clear Form
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </Section>
+            <Section>
+                <Heading level={2}>All Businesses</Heading>
+                {error && <Text className="text-rose-600 mb-6">{error}</Text>}
+                <div className="grid grid-cols-3 gap-4 w-full max-w-7xl mx-auto">
+                    {items.map(item => (
+                        <Card key={item.id} title={item.name} description={item.description} price={item.price}>
+                            <div className="flex gap-2">
+                                <Button variant="info" onClick={() => {handleUpdate(item)}} className="flex-1">Update</Button>
+                                <Button variant="danger" onClick={() => {handleDelete(item.id.toString())}} className="flex-1">Delete</Button>
+                            </div>
+                        </Card>
+                    ))}
+                </div>
+            </Section>
+        </Container>
+    );
+}

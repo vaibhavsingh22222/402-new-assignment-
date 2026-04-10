@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
           <div className="flex justify-between items-center h-24">
             {/* Logo */}
             <div className="text-2xl font-black italic text-indigo-600 tracking-tighter">
-              STUDENT<span className="text-slate-900">LAB</span>
+              coventry <span className="text-slate-900">eco connect</span>
             </div>
 
             {/* Nav Links */}
