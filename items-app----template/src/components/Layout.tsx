@@ -11,12 +11,13 @@ export const Container: React.FC<LayoutProps> = ({ children, className = "" }) =
   </div>
 );
 
-interface SectionProps extends LayoutProps {
-  bg?: string;
-}
+interface SectionProps extends LayoutProps {}
 
-export const Section: React.FC<SectionProps> = ({ children, className = "", bg = "bg-white" }) => (
-  <section className={`py-20 md:py-32 ${bg} ${className}`}>
+export const Section: React.FC<SectionProps> = ({
+  children,
+  className = ""
+}) => (
+  <section className={`py-20 md:py-32 ${className}`}>
     {children}
   </section>
 );

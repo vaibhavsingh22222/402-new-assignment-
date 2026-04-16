@@ -12,17 +12,17 @@ export const AsymmetricHero: React.FC = () => {
           {/* Left Side: Content */}
           <div className="relative z-10">
             <Heading level={1} className="mb-6">
-              Welcome to <br /> 
-              <span className="text-emerald-600">coventry.eco</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+              Level up your <br /> 
+              <span className="text-indigo-600">Development</span> Skills.
             </Heading>
             <Text className="text-xl mb-8 text-slate-600 leading-relaxed">
-              Discover eco-friendly businesses, sustainable products, and green services 
-              in Coventry. Together, we can build a cleaner, greener future.
+              Stop fighting with CSS and start building. Our components are 
+              engineered to be accessible, responsive, and easy to learn.
             </Text>
             
             <div className="flex gap-4">
-              <Button variant="success">Explore Businesses</Button>
-              <Button variant="info">Join the Movement</Button>
+              <Button variant="info">Start Building</Button>
+              <Button variant="success">View Projects</Button>
             </div>
 
             <div className="mt-10 flex items-center gap-4">
@@ -34,8 +34,8 @@ export const AsymmetricHero: React.FC = () => {
                 ))}
               </div>
               <p className="text-sm text-slate-500 font-medium">
-               Trusted by <span className="text-slate-900 font-bold">1,000+</span> eco-conscious users                 
-               </p>
+                Joined by <span className="text-slate-900 font-bold">2,000+</span> students this week
+              </p>
             </div>
           </div>
 

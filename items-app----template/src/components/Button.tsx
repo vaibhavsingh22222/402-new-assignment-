@@ -15,11 +15,16 @@ export const Button: React.FC<ButtonProps> = ({
   onClick, 
   className = "" 
 }) => {
+
   const variants: Record<ButtonVariant, string> = {
     success: "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-100 ring-emerald-500/20",
-    info: "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-100 ring-indigo-500/20",
-    danger: "bg-rose-500 hover:bg-rose-600 shadow-rose-100 ring-rose-500/20",
-    alert: "bg-amber-500 hover:bg-amber-600 shadow-amber-100 ring-amber-500/20",
+
+    // 🌿 converted to green shades
+    info: "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-100 ring-emerald-500/20",
+
+    danger: "bg-emerald-700 hover:bg-emerald-800 shadow-emerald-100 ring-emerald-500/20",
+
+    alert: "bg-emerald-400 hover:bg-emerald-500 shadow-emerald-100 ring-emerald-500/20",
   };
 
   return (

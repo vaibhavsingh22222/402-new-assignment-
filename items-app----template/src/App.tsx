@@ -1,12 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Navbar } from"./components/Navbar";  
+import { Navbar } from "./components/Navbar";  
 import Footer from "./components/Footer"
 import Home from "./pages/ Home"
-import Items from "./pages/ Items"
+import Items from "./pages/ Items"       
 import Item from "./pages/Item"
 import ItemAdmin from "./pages/ItemAdmin";
-//import Review from "./pages/Review";
-// import '@aws-amplify/ui-react/styles.css';
 import { Amplify } from "aws-amplify"
 import { Authenticator } from "@aws-amplify/ui-react"
 
@@ -23,20 +21,36 @@ function App() {
   return (
     <Authenticator.Provider>    
       <BrowserRouter>
-        <div className="bg-[#EAE4D6] min-h-screen">
-          <Navbar/>
-          <main className="p-6">
-            <Authenticator loginMechanisms={['email']} signUpAttributes={['name']}>
-              <Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/items" element={<Items/>}/>
-                <Route path="/items/id" element={<Item/>}/>
-                <Route path="/admin" element={<ItemAdmin/>} />
-              </Routes>
-            </Authenticator>
+
+        {/* 🌿 Light green global background */}
+        <div className="bg-emerald-50 min-h-screen flex flex-col text-emerald-950">
+
+          {/* 🌿 Navbar */}
+          <div className="bg-emerald-100">
+            <Navbar/>
+          </div>
+
+          {/* 🌿 Main content area */}
+          <main className="flex-1 px-6 py-6 bg-emerald-50">
+            <Routes>
+              <Route path="/" element={<Home/>} />
+              <Route path="/items" element={<Items/>}/>
+              <Route path="/items/:id" element={<Item/>}/>
+              <Route path="/admin" element={
+                <Authenticator loginMechanisms={['email']} signUpAttributes={['name']}>
+                  <ItemAdmin/>
+                </Authenticator>
+              } />
+            </Routes>
           </main>
-          <Footer />
+
+          {/* 🌿 Footer */}
+          <div className="bg-emerald-100">
+            <Footer />
+          </div>
+
         </div>
+
       </BrowserRouter>
     </Authenticator.Provider>
   )

@@ -98,20 +98,30 @@ export default function ItemAdmin(){
     if (loading) return (
         <Container>
             <Section>
-                <Text>Businesses are loading.....</Text>
+                <Text className="text-emerald-700">Businesses are loading.....</Text>
             </Section>
         </Container>
     );
 
     return(
         <Container>
-            <Section>
-                <Heading level={1}>Business Admin</Heading>
+
+            {/* 🌿 HEADER */}
+            <Section className="bg-transparent">
+                <Heading level={1} className="text-emerald-800">
+                    Business Admin
+                </Heading>
             </Section>
-            <Section>
-                <Heading level={2}>Manage Businesses</Heading>
+
+            {/* 🌿 FORM */}
+            <Section className="bg-transparent">
+                <Heading level={2} className="text-emerald-800">
+                    Manage Businesses
+                </Heading>
+
                 <div className="mt-8 max-w-2xl">
                     <div className="space-y-4">
+
                         <Input
                             label="Business ID"
                             name="id"
@@ -120,7 +130,9 @@ export default function ItemAdmin(){
                             value={formData.id}
                             onChange={handleInputChange}
                             disabled={isEditing}
+                            className="focus:ring-emerald-500 focus:border-emerald-500"
                         />
+
                         <Input
                             label="Business Name"
                             name="name"
@@ -128,7 +140,9 @@ export default function ItemAdmin(){
                             placeholder="Enter Business Name"
                             value={formData.name}
                             onChange={handleInputChange}
+                            className="focus:ring-emerald-500 focus:border-emerald-500"
                         />
+
                         <Input
                             label="Business Description"
                             name="description"
@@ -136,7 +150,9 @@ export default function ItemAdmin(){
                             placeholder="Enter Business Description"
                             value={formData.description}
                             onChange={handleInputChange}
+                            className="focus:ring-emerald-500 focus:border-emerald-500"
                         />
+
                         <Input
                             label="Business Price"
                             name="price"
@@ -145,38 +161,84 @@ export default function ItemAdmin(){
                             placeholder="Enter Business Price"
                             value={formData.price}
                             onChange={handleInputChange}
+                            className="focus:ring-emerald-500 focus:border-emerald-500"
                         />
 
-                        {formError && <Text className="text text-rose-600">{formError}</Text>}
+                        {formError && (
+                            <Text className="text-emerald-700">
+                                {formError}
+                            </Text>
+                        )}
 
                         <div className="flex gap-4 pt-4">
-                            <Button variant="success" onClick={handleSave}>
+
+                            <Button 
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                                onClick={handleSave}
+                            >
                                 Save Business
                             </Button>
-                            <Button variant="alert" onClick={() => {
-                                setFormData({ id: "", name: "", price: "", description: "" });
-                                setIsEditing(false);
-                            }}>
+
+                            <Button 
+                                className="bg-emerald-100 hover:bg-emerald-200 text-emerald-800"
+                                onClick={() => {
+                                    setFormData({ id: "", name: "", price: "", description: "" });
+                                    setIsEditing(false);
+                                }}
+                            >
                                 Clear Form
                             </Button>
+
                         </div>
+
                     </div>
                 </div>
             </Section>
-            <Section>
-                <Heading level={2}>All Businesses</Heading>
-                {error && <Text className="text-rose-600 mb-6">{error}</Text>}
+
+            {/* 🌿 LIST */}
+            <Section className="bg-transparent">
+                <Heading level={2} className="text-emerald-800">
+                    All Businesses
+                </Heading>
+
+                {error && (
+                    <Text className="text-emerald-700 mb-6">
+                        {error}
+                    </Text>
+                )}
+
                 <div className="grid grid-cols-3 gap-4 w-full max-w-7xl mx-auto">
+
                     {items.map(item => (
-                        <Card key={item.id} title={item.name} description={item.description} price={item.price}>
+                        <Card
+                            key={item.id}
+                            title={item.name}
+                            description={item.description}
+                            className="bg-white/70 border-emerald-200"
+                        >
                             <div className="flex gap-2">
-                                <Button variant="info" onClick={() => {handleUpdate(item)}} className="flex-1">Update</Button>
-                                <Button variant="danger" onClick={() => {handleDelete(item.id.toString())}} className="flex-1">Delete</Button>
+
+                                <Button 
+                                    onClick={() => handleUpdate(item)} 
+                                    className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white"
+                                >
+                                    Update
+                                </Button>
+
+                                <Button 
+                                    onClick={() => handleDelete(item.id.toString())} 
+                                    className="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white"
+                                >
+                                    Delete
+                                </Button>
+
                             </div>
                         </Card>
                     ))}
+
                 </div>
             </Section>
+
         </Container>
     );
 }
