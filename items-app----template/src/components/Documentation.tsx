@@ -1,10 +1,9 @@
 import React from 'react';
-
 // Import the library components
 import { Heading, Text } from './Tpography';
 import { Button } from './Button';
 import { Card } from './Card';
-import { Container, Section } from './Layout';
+import { Container } from './Layout';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CenteredHero } from './CenteredHero';
@@ -52,12 +51,10 @@ const DocSection: React.FC<{
       <Heading level={2} className="mb-3">{title}</Heading>
       <Text className="max-w-3xl text-lg">{description}</Text>
     </div>
-    
     <div className={`${dark ? 'bg-slate-900' : 'bg-slate-50'} border border-slate-200 rounded-3xl p-6 md:p-10 mb-6 shadow-inner overflow-hidden`}>
       <h4 className={`text-[10px] font-black uppercase tracking-widest mb-6 ${dark ? 'text-slate-500' : 'text-slate-400'}`}>Live Preview</h4>
       {children}
     </div>
-
     <div className="grid lg:grid-cols-2 gap-8">
       <div>
         <h4 className="text-xs font-black uppercase tracking-widest mb-4 text-slate-400 italic">Component Code</h4>
@@ -76,8 +73,7 @@ const DocSection: React.FC<{
 export const DocumentationPortal: React.FC = () => {
   return (
     <div className="min-h-screen bg-white pb-20 selection:bg-indigo-100">
-      
-     <Container className="mt-20">
+      <Container className="mt-20">
         <header className="mb-24">
           <Heading level={1} className="mb-6 tracking-tighter">UI Library Documentation</Heading>
           <Text className="text-2xl max-w-3xl font-light text-slate-500 leading-relaxed">
@@ -93,7 +89,7 @@ export const DocumentationPortal: React.FC = () => {
           code={`<Navbar />`}
         >
           <div className="border border-slate-200 rounded-xl overflow-hidden shadow-lg w-full scale-90">
-             <Navbar />
+            <Navbar />
           </div>
         </DocSection>
 
@@ -109,9 +105,9 @@ export const DocumentationPortal: React.FC = () => {
           code={`<Section bg="bg-slate-50">\n  <Container>\n    <Text>Layout logic starts here.</Text>\n  </Container>\n</Section>`}
         >
           <div className="w-full bg-indigo-50 border-2 border-dashed border-indigo-200 p-4 rounded-lg">
-             <div className="bg-white border-2 border-indigo-500 p-8 rounded-md text-center font-bold text-indigo-600 uppercase text-xs">
-                Container Context
-             </div>
+            <div className="bg-white border-2 border-indigo-500 p-8 rounded-md text-center font-bold text-indigo-600 uppercase text-xs">
+              Container Context
+            </div>
           </div>
         </DocSection>
 
@@ -182,14 +178,14 @@ export const DocumentationPortal: React.FC = () => {
           code={`<AsymmetricHero />\n<CenteredHero />`}
         >
           <div className="space-y-8 w-full scale-90">
-             <div className="border rounded-2xl overflow-hidden opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
-                <AsymmetricHero />
-             </div>
+            <div className="border rounded-2xl overflow-hidden opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
+              <AsymmetricHero />
+            </div>
           </div>
           <div className="space-y-8 w-full scale-90">
-             <div className="border rounded-2xl overflow-hidden opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
-                <CenteredHero />
-             </div>
+            <div className="border rounded-2xl overflow-hidden opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-crosshair">
+              <CenteredHero />
+            </div>
           </div>
         </DocSection>
 
@@ -208,12 +204,15 @@ export const DocumentationPortal: React.FC = () => {
       </Container>
 
       {/* --- FINAL INSTITUTIONAL FOOTER --- */}
-      <Section bg="bg-slate-900" className="mt-20">
+      {/* Using div instead of Section to avoid bg prop TypeScript error */}
+      <div className="bg-slate-900 mt-20">
         <Container>
-          <div className="text-center">
-            <div className="text-white font-black text-2xl tracking-tighter mb-4 italic">CU COVENTRY CLOUD LABS</div>
+          <div className="text-center py-16">
+            <div className="text-white font-black text-2xl tracking-tighter mb-4 italic">
+              CU COVENTRY CLOUD LABS
+            </div>
             <p className="text-slate-500 text-sm max-w-xl mx-auto leading-relaxed">
-              This library is the official UI standard for the **Cloud Computing Degree Programme**. 
+              This library is the official UI standard for the Cloud Computing Degree Programme. 
               All student project submissions are expected to adhere to these design principles.
             </p>
             <div className="mt-8 pt-8 border-t border-slate-800 text-[10px] text-slate-600 uppercase tracking-widest">
@@ -221,7 +220,8 @@ export const DocumentationPortal: React.FC = () => {
             </div>
           </div>
         </Container>
-      </Section>
+      </div>
+
     </div>
   );
 };

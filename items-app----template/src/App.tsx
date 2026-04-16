@@ -5,6 +5,7 @@ import Home from "./pages/ Home"
 import Items from "./pages/ Items"       
 import Item from "./pages/Item"
 import ItemAdmin from "./pages/ItemAdmin";
+import ReviewsAdmin from "./pages/ReviewsAdmin"
 import { Amplify } from "aws-amplify"
 import { Authenticator } from "@aws-amplify/ui-react"
 
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/items" element={<Items/>}/>
                 <Route path="/items/:id" element={<Item/>}/>
                 <Route path="/admin" element={<ItemAdmin/>} />
+                <Route path="/reviews" element={<ReviewsAdmin/>} />
               </Routes>
             </main>
 
