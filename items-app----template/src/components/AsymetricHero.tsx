@@ -5,6 +5,7 @@ import { Button } from './Button';
 
 export const AsymmetricHero: React.FC = () => {
   return (
+    // Main section (full hero area)
     <section className="relative py-20 lg:py-32 overflow-hidden">
       <Container>
         <div className="grid lg:grid-cols-2 gap-16 items-center">
